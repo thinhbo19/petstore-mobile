@@ -12,12 +12,12 @@ export type LoginResponse = {
 
 export const AuthService = {
   login: async (email: string, password: string) => {
-    console.log("[AuthService][Login] request:", { email });
+    // console.log("[AuthService][Login] request:", { email });
     const response = await apiClient.post<LoginResponse>(API_ENDPOINTS.LOGIN, {
       email,
       password,
     });
-    console.log("[AuthService][Login] status:", response.status);
+    // console.log("[AuthService][Login] status:", response.status);
     return response.data;
   },
   register: async (username: string, email: string, password: string) => {

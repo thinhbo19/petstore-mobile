@@ -6,15 +6,14 @@ import {
   Platform,
   Pressable,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Entrance } from "../components/Entrance";
-import { authSharedStyles } from "../styles/authShared";
 import type { RootStackParamList } from "../navigation/types";
 import { AuthService } from "../services/Auth/AuthService";
 import { getApiErrorMessage } from "../lib/apiError";
@@ -71,20 +70,25 @@ export const ResetPasswordScreen = ({ route, navigation }: Props) => {
   return (
     <ScreenContainer>
       <KeyboardAvoidingView
-        style={styles.container}
+        className="flex-1"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+        <ScrollView contentContainerClassName="flex-grow justify-center" keyboardShouldPersistTaps="handled">
           <Entrance>
-            <View style={styles.card}>
-              <Text style={authSharedStyles.pawIcon}>🐾</Text>
-              <Text style={authSharedStyles.title}>Đặt lại mật khẩu</Text>
-              <Text style={authSharedStyles.description}>
+            <View className="rounded-[20px] bg-white p-5">
+              <MaterialCommunityIcons
+                name="paw"
+                size={30}
+                color="#ea580c"
+                style={{ marginBottom: 8, alignSelf: "center" }}
+              />
+              <Text className="text-center text-[26px] font-bold text-[#252020]">Đặt lại mật khẩu</Text>
+              <Text className="mb-[14px] mt-1.5 text-center text-xs font-medium leading-5 text-[#8a6f61]">
                 Nhập token từ email và mật khẩu mới của bạn
               </Text>
               {!isForgotOtpFlow ? (
                 <TextInput
-                  style={authSharedStyles.input}
+                  className="mb-2.5 rounded-xl border border-orange-500 bg-white px-3 py-[11px]"
                   placeholder="Token"
                   placeholderTextColor="#94a3b8"
                   value={token}
@@ -92,14 +96,14 @@ export const ResetPasswordScreen = ({ route, navigation }: Props) => {
                   autoCapitalize="none"
                 />
               ) : (
-                <Text style={authSharedStyles.helperText}>
-                  Email: <Text style={styles.emphasis}>{emailFromRoute}</Text>{"\n"}
-                  OTP: <Text style={styles.emphasis}>{otpFromRoute}</Text>
+                <Text className="mt-2.5 text-center font-medium leading-[21px] text-[#8a6f61]">
+                  Email: <Text className="font-bold text-orange-600">{emailFromRoute}</Text>{"\n"}
+                  OTP: <Text className="font-bold text-orange-600">{otpFromRoute}</Text>
                 </Text>
               )}
-              <View style={authSharedStyles.inputWrapper}>
+              <View className="relative mb-2.5">
                 <TextInput
-                  style={authSharedStyles.inputWithToggle}
+                  className="rounded-xl border border-orange-500 bg-white px-3 py-[11px] pr-12"
                   placeholder="Mật khẩu mới"
                   placeholderTextColor="#94a3b8"
                   value={password}
@@ -107,17 +111,21 @@ export const ResetPasswordScreen = ({ route, navigation }: Props) => {
                   secureTextEntry={!showPassword}
                 />
                 <Pressable
-                  style={authSharedStyles.toggleButton}
+                  className="absolute right-2.5 top-2.5 p-1"
                   onPress={() => setShowPassword((v) => !v)}
+                  accessibilityRole="button"
+                  accessibilityLabel={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                 >
-                  <Text style={authSharedStyles.toggleText}>
-                    {showPassword ? "Ẩn" : "Hiện"}
-                  </Text>
+                  <MaterialCommunityIcons
+                    name={showPassword ? "eye-off-outline" : "eye-outline"}
+                    size={18}
+                    color="#ea580c"
+                  />
                 </Pressable>
               </View>
-              <View style={authSharedStyles.inputWrapper}>
+              <View className="relative mb-2.5">
                 <TextInput
-                  style={authSharedStyles.inputWithToggle}
+                  className="rounded-xl border border-orange-500 bg-white px-3 py-[11px] pr-12"
                   placeholder="Xác nhận mật khẩu"
                   placeholderTextColor="#94a3b8"
                   value={confirmPassword}
@@ -125,27 +133,33 @@ export const ResetPasswordScreen = ({ route, navigation }: Props) => {
                   secureTextEntry={!showConfirmPassword}
                 />
                 <Pressable
-                  style={authSharedStyles.toggleButton}
+                  className="absolute right-2.5 top-2.5 p-1"
                   onPress={() => setShowConfirmPassword((v) => !v)}
+                  accessibilityRole="button"
+                  accessibilityLabel={showConfirmPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                 >
-                  <Text style={authSharedStyles.toggleText}>
-                    {showConfirmPassword ? "Ẩn" : "Hiện"}
-                  </Text>
+                  <MaterialCommunityIcons
+                    name={showConfirmPassword ? "eye-off-outline" : "eye-outline"}
+                    size={18}
+                    color="#ea580c"
+                  />
                 </Pressable>
               </View>
               <Pressable
-                style={[authSharedStyles.button, loading ? styles.buttonDisabled : null]}
+                className={`mt-2 items-center rounded-xl bg-orange-500 py-[13px] ${loading ? "opacity-70" : ""}`}
                 onPress={onSubmit}
                 disabled={loading}
               >
                 {loading ? (
                   <ActivityIndicator color="#fff" />
                 ) : (
-                  <Text style={authSharedStyles.buttonText}>Đặt lại mật khẩu</Text>
+                  <Text className="font-semibold text-white">Đặt lại mật khẩu</Text>
                 )}
               </Pressable>
               <Pressable onPress={() => navigation.navigate("Login")}>
-                <Text style={authSharedStyles.helperText}>Quay lại đăng nhập</Text>
+                <Text className="mt-2.5 text-center font-medium leading-[21px] text-[#8a6f61]">
+                  Quay lại đăng nhập
+                </Text>
               </Pressable>
             </View>
           </Entrance>
@@ -154,18 +168,3 @@ export const ResetPasswordScreen = ({ route, navigation }: Props) => {
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scroll: { flexGrow: 1, justifyContent: "center" },
-  card: {
-    borderRadius: 20,
-    backgroundColor: "#fff",
-    padding: 20,
-  },
-  buttonDisabled: { opacity: 0.7 },
-  emphasis: {
-    color: "#ea580c",
-    fontWeight: "700",
-  },
-});

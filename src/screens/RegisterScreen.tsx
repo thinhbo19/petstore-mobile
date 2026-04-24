@@ -7,16 +7,15 @@ import {
   Platform,
   Pressable,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entrance } from "../components/Entrance";
 import { ScreenContainer } from "../components/ScreenContainer";
 import type { RootStackParamList } from "../navigation/types";
-import { authSharedStyles } from "../styles/authShared";
 import { AuthService } from "../services/Auth/AuthService";
 import { getApiErrorMessage } from "../lib/apiError";
 
@@ -56,7 +55,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
     try {
       setLoading(true);
       const data = await AuthService.register(fullName, email, password);
-      console.log("[Auth][Register] response:", data);
+      // console.log("[Auth][Register] response:", data);
       const message =
         (data as { message?: string })?.message ||
         "Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.";
@@ -64,7 +63,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
         { text: "OK", onPress: () => navigation.navigate("VerifyOtp", { email }) },
       ]);
     } catch (error) {
-      console.log("[Auth][Register] error:", error);
+      // console.log("[Auth][Register] error:", error);
       Alert.alert("Đăng ký thất bại", getApiErrorMessage(error));
     } finally {
       setLoading(false);
@@ -74,45 +73,50 @@ export const RegisterScreen = ({ navigation }: Props) => {
   return (
     <ScreenContainer>
       <KeyboardAvoidingView
-        style={styles.container}
+        className="flex-1"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
-          contentContainerStyle={styles.scroll}
+          contentContainerClassName="flex-grow"
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           <Entrance fill>
-            <View style={[authSharedStyles.formCard, styles.formCard]}>
+            <View className="flex-1 overflow-hidden bg-[#fff8f2]">
             <ImageBackground
               source={require("../../assets/auth/register-hero.jpg")}
-              style={styles.heroImage}
-              imageStyle={styles.heroImageRounded}
+              className="h-[230px] justify-end"
+              imageClassName="rounded-t-[20px]"
             >
-              <View style={authSharedStyles.heroOverlay}>
-                <Text style={authSharedStyles.heroTitle}>Tham gia cùng chúng tôi</Text>
-                <Text style={authSharedStyles.heroSubtitle}>
+              <View className="h-full items-center justify-end bg-[rgba(117,117,117,0.45)] px-4 py-[14px]">
+                <Text className="text-center text-[32px] font-extrabold text-white">Tham gia cùng chúng tôi</Text>
+                <Text className="mt-1.5 text-center text-base leading-5 text-orange-100">
                   Khám phá thế giới thú cưng đáng yêu và những người bạn đồng hành
                 </Text>
               </View>
             </ImageBackground>
 
-            <View style={authSharedStyles.formBody}>
-              <Text style={authSharedStyles.pawIcon}>🐾</Text>
-              <Text style={authSharedStyles.title}>Đăng ký tài khoản</Text>
-              <Text style={authSharedStyles.description}>
+            <View className="flex-1 justify-start px-6 pb-6 pt-[22px]">
+              <MaterialCommunityIcons
+                name="paw"
+                size={30}
+                color="#ea580c"
+                style={{ marginBottom: 8, alignSelf: "center" }}
+              />
+              <Text className="text-center text-[26px] font-bold text-[#252020]">Đăng ký tài khoản</Text>
+              <Text className="mb-[14px] mt-1.5 text-center text-xs font-medium leading-5 text-[#8a6f61]">
                 Tham gia cộng đồng yêu thú cưng của chúng tôi
               </Text>
 
               <TextInput
-                style={authSharedStyles.input}
+                className="mb-2.5 rounded-xl border border-orange-500 bg-white px-3 py-[11px]"
                 placeholder="Họ và tên"
                 placeholderTextColor="#94a3b8"
                 value={fullName}
                 onChangeText={setFullName}
               />
               <TextInput
-                style={authSharedStyles.input}
+                className="mb-2.5 rounded-xl border border-orange-500 bg-white px-3 py-[11px]"
                 placeholder="Email"
                 placeholderTextColor="#94a3b8"
                 value={email}
@@ -120,9 +124,9 @@ export const RegisterScreen = ({ navigation }: Props) => {
                 autoCapitalize="none"
                 keyboardType="email-address"
               />
-              <View style={authSharedStyles.inputWrapper}>
+              <View className="relative mb-2.5">
                 <TextInput
-                  style={authSharedStyles.inputWithToggle}
+                  className="rounded-xl border border-orange-500 bg-white px-3 py-[11px] pr-12"
                   placeholder="Mật khẩu"
                   placeholderTextColor="#94a3b8"
                   value={password}
@@ -130,17 +134,21 @@ export const RegisterScreen = ({ navigation }: Props) => {
                   secureTextEntry={!showPassword}
                 />
                 <Pressable
-                  style={authSharedStyles.toggleButton}
+                  className="absolute right-2.5 top-2.5 p-1"
                   onPress={() => setShowPassword((v) => !v)}
+                  accessibilityRole="button"
+                  accessibilityLabel={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                 >
-                  <Text style={authSharedStyles.toggleText}>
-                    {showPassword ? "Ẩn" : "Hiện"}
-                  </Text>
+                  <MaterialCommunityIcons
+                    name={showPassword ? "eye-off-outline" : "eye-outline"}
+                    size={18}
+                    color="#ea580c"
+                  />
                 </Pressable>
               </View>
-              <View style={authSharedStyles.inputWrapper}>
+              <View className="relative mb-2.5">
                 <TextInput
-                  style={authSharedStyles.inputWithToggle}
+                  className="rounded-xl border border-orange-500 bg-white px-3 py-[11px] pr-12"
                   placeholder="Xác nhận mật khẩu"
                   placeholderTextColor="#94a3b8"
                   value={confirmPassword}
@@ -148,31 +156,35 @@ export const RegisterScreen = ({ navigation }: Props) => {
                   secureTextEntry={!showConfirmPassword}
                 />
                 <Pressable
-                  style={authSharedStyles.toggleButton}
+                  className="absolute right-2.5 top-2.5 p-1"
                   onPress={() => setShowConfirmPassword((v) => !v)}
+                  accessibilityRole="button"
+                  accessibilityLabel={showConfirmPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                 >
-                  <Text style={authSharedStyles.toggleText}>
-                    {showConfirmPassword ? "Ẩn" : "Hiện"}
-                  </Text>
+                  <MaterialCommunityIcons
+                    name={showConfirmPassword ? "eye-off-outline" : "eye-outline"}
+                    size={18}
+                    color="#ea580c"
+                  />
                 </Pressable>
               </View>
 
               <Pressable
-                style={[authSharedStyles.button, loading ? styles.buttonDisabled : null]}
+                className={`mt-2 items-center rounded-xl bg-orange-500 py-[13px] ${loading ? "opacity-70" : ""}`}
                 onPress={validateAndSubmit}
                 disabled={loading}
               >
                 {loading ? (
                   <ActivityIndicator color="#fff" />
                 ) : (
-                  <Text style={authSharedStyles.buttonText}>Đăng ký</Text>
+                  <Text className="font-semibold text-white">Đăng ký</Text>
                 )}
               </Pressable>
 
               <Pressable onPress={() => navigation.navigate("Login")}>
-                <Text style={authSharedStyles.helperText}>
+                <Text className="mt-2.5 text-center font-medium leading-[21px] text-[#8a6f61]">
                   Đã có tài khoản?{" "}
-                  <Text style={authSharedStyles.helperHighlight}>Đăng nhập</Text>
+                  <Text className="font-bold text-orange-600">Đăng nhập</Text>
                 </Text>
               </Pressable>
             </View>
@@ -183,25 +195,3 @@ export const RegisterScreen = ({ navigation }: Props) => {
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scroll: {
-    flexGrow: 1,
-    paddingVertical: 0,
-  },
-  formCard: {},
-  heroImage: {
-    height: 230,
-    justifyContent: "flex-end",
-  },
-  heroImageRounded: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  buttonDisabled: {
-    opacity: 0.7,
-  },
-});

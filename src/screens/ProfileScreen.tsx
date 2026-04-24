@@ -1,7 +1,6 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Entrance } from "../components/Entrance";
 import { ScreenContainer } from "../components/ScreenContainer";
-import { colors } from "../constants/theme";
 import { useAppDispatch } from "../store/hooks";
 import { clearSession } from "../store/slices/authSlice";
 
@@ -10,52 +9,21 @@ export const ProfileScreen = () => {
 
   return (
     <ScreenContainer>
-      <View style={styles.container}>
+      <View className="flex-1 justify-center">
         <Entrance>
-          <View style={styles.card}>
-          <Text style={styles.title}>Tai khoan</Text>
-          <Text style={styles.text}>Vai tro hien tai: User (demo)</Text>
-          <Text style={styles.text}>Trang thai dong bo voi frontend web.</Text>
-          <Pressable style={styles.button} onPress={() => dispatch(clearSession())}>
-            <Text style={styles.buttonText}>Dang xuat</Text>
-          </Pressable>
+          <View className="gap-2 rounded-[18px] border border-[#f8c6a8] bg-[#fff8f2] p-[18px]">
+            <Text className="text-[26px] font-bold text-[#252020]">Tài khoản</Text>
+            <Text className="text-[#8a6f61]">Vai trò hiện tại: User (demo)</Text>
+            <Text className="text-[#8a6f61]">Trạng thái đồng bộ với frontend web.</Text>
+            <Pressable
+              className="mt-2 items-center rounded-xl bg-rose-500 py-2.5"
+              onPress={() => dispatch(clearSession())}
+            >
+              <Text className="font-semibold text-white">Đăng xuất</Text>
+            </Pressable>
           </View>
         </Entrance>
       </View>
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  card: {
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surface,
-    padding: 18,
-    gap: 8,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: "700",
-    color: colors.foreground,
-  },
-  text: {
-    color: colors.muted,
-  },
-  button: {
-    marginTop: 8,
-    backgroundColor: colors.danger,
-    borderRadius: 12,
-    paddingVertical: 10,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "600",
-  },
-});

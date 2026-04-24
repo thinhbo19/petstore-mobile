@@ -7,15 +7,14 @@ import {
   Platform,
   Pressable,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entrance } from "../components/Entrance";
 import { ScreenContainer } from "../components/ScreenContainer";
-import { authSharedStyles } from "../styles/authShared";
 import type { RootStackParamList } from "../navigation/types";
 import { AuthService } from "../services/Auth/AuthService";
 import { getApiErrorMessage } from "../lib/apiError";
@@ -47,32 +46,37 @@ export const ForgotPasswordScreen = ({ navigation }: Props) => {
   return (
     <ScreenContainer>
       <KeyboardAvoidingView
-        style={styles.container}
+        className="flex-1"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+        <ScrollView contentContainerClassName="flex-grow" keyboardShouldPersistTaps="handled">
           <Entrance fill>
-            <View style={authSharedStyles.formCard}>
+            <View className="flex-1 overflow-hidden bg-[#fff8f2]">
               <ImageBackground
                 source={require("../../assets/auth/login-hero.png")}
-                style={styles.heroImage}
-                imageStyle={styles.heroImageRounded}
+                className="h-[250px] justify-end"
+                imageClassName="rounded-t-[20px]"
               >
-                <View style={authSharedStyles.heroOverlay}>
-                  <Text style={authSharedStyles.heroTitle}>Quên mật khẩu?</Text>
-                  <Text style={authSharedStyles.heroSubtitle}>
+                <View className="h-full items-center justify-end bg-[rgba(117,117,117,0.45)] px-4 py-[14px]">
+                  <Text className="text-center text-[32px] font-extrabold text-white">Quên mật khẩu?</Text>
+                  <Text className="mt-1.5 text-center text-base leading-5 text-orange-100">
                     Chúng tôi sẽ giúp bạn khôi phục mật khẩu
                   </Text>
                 </View>
               </ImageBackground>
-              <View style={authSharedStyles.formBody}>
-                <Text style={authSharedStyles.pawIcon}>🐾</Text>
-                <Text style={authSharedStyles.title}>Khôi phục mật khẩu</Text>
-                <Text style={authSharedStyles.description}>
+              <View className="flex-1 justify-start px-6 pb-6 pt-[22px]">
+                <MaterialCommunityIcons
+                  name="paw"
+                  size={30}
+                  color="#ea580c"
+                  style={{ marginBottom: 8, alignSelf: "center" }}
+                />
+                <Text className="text-center text-[26px] font-bold text-[#252020]">Khôi phục mật khẩu</Text>
+                <Text className="mb-[14px] mt-1.5 text-center text-xs font-medium leading-5 text-[#8a6f61]">
                   Nhập email để nhận hướng dẫn đặt lại mật khẩu
                 </Text>
                 <TextInput
-                  style={authSharedStyles.input}
+                  className="mb-2.5 rounded-xl border border-orange-500 bg-white px-3 py-[11px]"
                   placeholder="Email"
                   placeholderTextColor="#94a3b8"
                   value={email}
@@ -81,18 +85,20 @@ export const ForgotPasswordScreen = ({ navigation }: Props) => {
                   autoCapitalize="none"
                 />
                 <Pressable
-                  style={[authSharedStyles.button, loading ? styles.buttonDisabled : null]}
+                  className={`mt-2 items-center rounded-xl bg-orange-500 py-[13px] ${loading ? "opacity-70" : ""}`}
                   onPress={onSubmit}
                   disabled={loading}
                 >
                   {loading ? (
                     <ActivityIndicator color="#fff" />
                   ) : (
-                    <Text style={authSharedStyles.buttonText}>Gửi yêu cầu</Text>
+                    <Text className="font-semibold text-white">Gửi yêu cầu</Text>
                   )}
                 </Pressable>
                 <Pressable onPress={() => navigation.navigate("Login")}>
-                  <Text style={authSharedStyles.helperText}>Quay lại đăng nhập</Text>
+                  <Text className="mt-2.5 text-center font-medium leading-[21px] text-[#8a6f61]">
+                    Quay lại đăng nhập
+                  </Text>
                 </Pressable>
               </View>
             </View>
@@ -102,14 +108,3 @@ export const ForgotPasswordScreen = ({ navigation }: Props) => {
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scroll: { flexGrow: 1 },
-  heroImage: { height: 250, justifyContent: "flex-end" },
-  heroImageRounded: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  buttonDisabled: { opacity: 0.7 },
-});

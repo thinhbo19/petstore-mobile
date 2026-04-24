@@ -6,15 +6,14 @@ import {
   Platform,
   Pressable,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entrance } from "../components/Entrance";
 import { ScreenContainer } from "../components/ScreenContainer";
-import { authSharedStyles } from "../styles/authShared";
 import type { RootStackParamList } from "../navigation/types";
 import { AuthService } from "../services/Auth/AuthService";
 import { getApiErrorMessage } from "../lib/apiError";
@@ -75,20 +74,25 @@ export const VerifyOtpScreen = ({ route, navigation }: Props) => {
   return (
     <ScreenContainer>
       <KeyboardAvoidingView
-        style={styles.container}
+        className="flex-1"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+        <ScrollView contentContainerClassName="flex-grow justify-center" keyboardShouldPersistTaps="handled">
           <Entrance fill>
-            <View style={styles.card}>
-              <Text style={authSharedStyles.pawIcon}>🐾</Text>
-              <Text style={authSharedStyles.title}>Xác thực tài khoản</Text>
-              <Text style={authSharedStyles.description}>
+            <View className="rounded-[20px] bg-white p-5">
+              <MaterialCommunityIcons
+                name="paw"
+                size={30}
+                color="#ea580c"
+                style={{ marginBottom: 8, alignSelf: "center" }}
+              />
+              <Text className="text-center text-[26px] font-bold text-[#252020]">Xác thực tài khoản</Text>
+              <Text className="mb-[14px] mt-1.5 text-center text-xs font-medium leading-5 text-[#8a6f61]">
                 Nhập mã OTP đã gửi đến {"\n"}
-                <Text style={styles.email}>{email}</Text>
+                <Text className="font-bold text-orange-600">{email}</Text>
               </Text>
               <TextInput
-                style={styles.otpInput}
+                className="mb-2.5 rounded-xl border border-orange-500 bg-white px-3 py-[11px] text-center text-2xl tracking-[6px]"
                 placeholder="Nhập OTP"
                 placeholderTextColor="#94a3b8"
                 value={otp}
@@ -97,23 +101,25 @@ export const VerifyOtpScreen = ({ route, navigation }: Props) => {
                 maxLength={6}
               />
               <Pressable
-                style={[authSharedStyles.button, loading ? styles.buttonDisabled : null]}
+                className={`mt-2 items-center rounded-xl bg-orange-500 py-[13px] ${loading ? "opacity-70" : ""}`}
                 onPress={onVerify}
                 disabled={loading}
               >
                 {loading ? (
                   <ActivityIndicator color="#fff" />
                 ) : (
-                  <Text style={authSharedStyles.buttonText}>Xác thực</Text>
+                  <Text className="font-semibold text-white">Xác thực</Text>
                 )}
               </Pressable>
               <Pressable onPress={onResend} disabled={resendLoading}>
-                <Text style={authSharedStyles.helperText}>
+                <Text className="mt-2.5 text-center font-medium leading-[21px] text-[#8a6f61]">
                   {resendLoading ? "Đang gửi lại..." : "Không nhận được mã? Gửi lại"}
                 </Text>
               </Pressable>
               <Pressable onPress={() => navigation.navigate("Login")}>
-                <Text style={authSharedStyles.helperText}>Quay lại đăng nhập</Text>
+                <Text className="mt-2.5 text-center font-medium leading-[21px] text-[#8a6f61]">
+                  Quay lại đăng nhập
+                </Text>
               </Pressable>
             </View>
           </Entrance>
@@ -122,24 +128,3 @@ export const VerifyOtpScreen = ({ route, navigation }: Props) => {
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scroll: { flexGrow: 1, justifyContent: "center" },
-  card: {
-    borderRadius: 20,
-    backgroundColor: "#fff",
-    padding: 20,
-  },
-  otpInput: {
-    ...authSharedStyles.input,
-    textAlign: "center",
-    letterSpacing: 6,
-    fontSize: 24,
-  },
-  email: {
-    color: "#ea580c",
-    fontWeight: "700",
-  },
-  buttonDisabled: { opacity: 0.7 },
-});

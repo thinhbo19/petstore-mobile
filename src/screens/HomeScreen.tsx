@@ -1,110 +1,45 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { Entrance } from "../components/Entrance";
 import { ScreenContainer } from "../components/ScreenContainer";
-import { colors } from "../constants/theme";
 
 export const HomeScreen = () => {
   return (
     <ScreenContainer>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerClassName="pt-3 pb-6 gap-3.5">
         <Entrance>
-          <View style={styles.hero}>
-          <Text style={styles.badge}>Pet Shop hien dai</Text>
-          <Text style={styles.title}>Noi thu cung tro thanh thanh vien gia dinh</Text>
-          <Text style={styles.subtitle}>
-            Kham pha bo suu tap thu cung va phu kien cao cap theo phong cach cua
-            frontend web.
-          </Text>
+          <View className="rounded-[18px] bg-slate-900 p-[18px]">
+            <Text className="self-start overflow-hidden rounded-full bg-[rgba(249,115,22,0.22)] px-2.5 py-[5px] text-[11px] font-bold uppercase text-amber-300">
+              Pet Shop hiện đại
+            </Text>
+            <Text className="mt-2.5 text-[26px] font-extrabold leading-[34px] text-white">
+              Nơi thú cưng trở thành thành viên gia đình
+            </Text>
+            <Text className="mt-2 text-sm leading-[21px] text-slate-200">
+              Khám phá bộ sưu tập thú cưng và phụ kiện cao cấp theo phong cách của
+              frontend web.
+            </Text>
           </View>
         </Entrance>
 
         <Entrance delay={90}>
-          <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Vi sao chon chung toi</Text>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Thu cung duoc cham soc ky</Text>
-            <Text style={styles.cardText}>
-              Tu van giong loai, suc khoe va che do cham soc phu hop cho tung gia
-              dinh.
-            </Text>
-          </View>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Phu kien chat luong</Text>
-            <Text style={styles.cardText}>
-              Danh muc phu kien duoc chon loc, de dang tim kiem va dat hang.
-            </Text>
-          </View>
+          <View className="gap-2.5 rounded-[18px] border border-[#f8c6a8] bg-[#fff8f2] p-4">
+            <Text className="text-[19px] font-bold text-[#252020]">Vì sao chọn chúng tôi</Text>
+            <View className="rounded-xl border border-amber-300 bg-orange-50 p-3">
+              <Text className="mb-1 font-bold text-orange-900">Thú cưng được chăm sóc kỹ</Text>
+              <Text className="text-[13px] leading-[19px] text-orange-950">
+                Tư vấn giống loài, sức khỏe và chế độ chăm sóc phù hợp cho từng gia
+                đình.
+              </Text>
+            </View>
+            <View className="rounded-xl border border-amber-300 bg-orange-50 p-3">
+              <Text className="mb-1 font-bold text-orange-900">Phụ kiện chất lượng</Text>
+              <Text className="text-[13px] leading-[19px] text-orange-950">
+                Danh mục phụ kiện được chọn lọc, dễ dàng tìm kiếm và đặt hàng.
+              </Text>
+            </View>
           </View>
         </Entrance>
       </ScrollView>
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 12,
-    paddingBottom: 24,
-    gap: 14,
-  },
-  hero: {
-    borderRadius: 18,
-    padding: 18,
-    backgroundColor: "#0f172a",
-  },
-  badge: {
-    alignSelf: "flex-start",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 999,
-    overflow: "hidden",
-    backgroundColor: "rgba(249, 115, 22, 0.22)",
-    color: "#fdba74",
-    fontSize: 11,
-    fontWeight: "700",
-    textTransform: "uppercase",
-  },
-  title: {
-    marginTop: 10,
-    fontSize: 26,
-    lineHeight: 34,
-    fontWeight: "800",
-    color: "#fff",
-  },
-  subtitle: {
-    marginTop: 8,
-    fontSize: 14,
-    lineHeight: 21,
-    color: "#e2e8f0",
-  },
-  section: {
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surface,
-    padding: 16,
-    gap: 10,
-  },
-  sectionTitle: {
-    color: colors.foreground,
-    fontSize: 19,
-    fontWeight: "700",
-  },
-  card: {
-    borderRadius: 12,
-    backgroundColor: "#fff7ed",
-    borderWidth: 1,
-    borderColor: "#fdba74",
-    padding: 12,
-  },
-  cardTitle: {
-    color: "#9a3412",
-    fontWeight: "700",
-    marginBottom: 4,
-  },
-  cardText: {
-    color: "#7c2d12",
-    fontSize: 13,
-    lineHeight: 19,
-  },
-});
