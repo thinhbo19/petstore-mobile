@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Entrance } from "../components/Entrance";
 import { ScreenContainer } from "../components/ScreenContainer";
-import { colors } from "../constants/theme";
 import type { RootStackParamList } from "../navigation/types";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Splash">;
@@ -18,35 +18,20 @@ export const SplashScreen = ({ navigation }: Props) => {
 
   return (
     <ScreenContainer>
-      <View style={styles.container}>
+      <View className="flex-1 items-center justify-center">
         <Entrance>
-          <View style={styles.surface}>
-            <ActivityIndicator size="large" color={colors.brand500} />
-            <Text style={styles.text}>PetStore Mobile</Text>
+          <View className="min-w-[230px] items-center gap-3 rounded-[20px] border border-[#f8c6a8] bg-[#fff8f2] px-8 py-6">
+            <View className="h-14 w-14 items-center justify-center rounded-full bg-orange-100">
+              <MaterialCommunityIcons name="paw" size={30} color="#ea580c" />
+            </View>
+            <Text className="text-lg font-bold text-[#252020]">PetStore Mobile</Text>
+            <Text className="text-center text-sm text-[#8a6f61]">
+              Đang tải trải nghiệm mua sắm và chăm sóc thú cưng...
+            </Text>
+            <ActivityIndicator size="small" color="#ea580c" />
           </View>
         </Entrance>
       </View>
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  surface: {
-    gap: 10,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surface,
-    borderRadius: 18,
-    paddingHorizontal: 30,
-    paddingVertical: 20,
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-});

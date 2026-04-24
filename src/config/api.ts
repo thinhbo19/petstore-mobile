@@ -7,6 +7,7 @@ export const API_DOMAIN = {
   PET_DOMAIN: `${domain}/pets`,
   PRODUCT_DOMAIN: `${domain}/product`,
   ORDER_DOMAIN: `${domain}/order`,
+  MOBILE_HOME_DOMAIN: `${domain}/mobile/home`,
 };
 
 export const API_ENDPOINTS = {
@@ -24,4 +25,6 @@ export const API_ENDPOINTS = {
   GET_CURRENT_USER: `${API_DOMAIN.AUTH_DOMAIN}/current`,
   LOGOUT: `${API_DOMAIN.AUTH_DOMAIN}/logout`,
   ALL_PETS_BY_SPECIES: `${API_DOMAIN.PET_DOMAIN}/getPetBySpecies`,
+  MOBILE_HOME: `${API_DOMAIN.MOBILE_HOME_DOMAIN}`,
+  MOBILE_HOME_FOR_YOU: `${API_DOMAIN.MOBILE_HOME_DOMAIN}/for-you`,
 };
